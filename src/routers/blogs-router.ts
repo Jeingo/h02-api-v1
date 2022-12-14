@@ -20,7 +20,8 @@ blogsRouter.get('/:id', (req: Request, res: Response) => {
 })
 
 blogsRouter.post('/', (req: Request, res: Response) => {
-
+    const createdBlog = blogsRepository.createBlog(req.body.name, req.body.description, req.body.websiteUrl)
+    res.status(HTTP_STATUSES.CREATED_201).json(createdBlog)
 })
 
 blogsRouter.put('/:id', (req: Request, res: Response) => {
