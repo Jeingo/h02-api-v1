@@ -4,7 +4,7 @@ import {blogsRouter} from "./routers/blogs-router"
 import {postsRouter} from "./routers/posts-router"
 import {testRouter} from "./routers/test-router"
 
-const app = express()
+export const app = express()
 
 const PORT = process.env.PORT || 5000
 
