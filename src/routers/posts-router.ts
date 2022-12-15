@@ -3,6 +3,12 @@ import {HTTP_STATUSES} from "../constats/status"
 import {postsRepository} from "../repositories/posts-repository"
 import {blogsRepository} from "../repositories/blogs-repository";
 import {inputValidation} from "../middleware/input-validation";
+import {
+    blogIdValidation,
+    contentValidation,
+    shortDescriptionValidation,
+    titleValidation
+} from "../middleware/input-posts-validation";
 
 export const postsRouter = Router({})
 
@@ -22,6 +28,10 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
 })
 
 postsRouter.post('/',
+    titleValidation,
+    shortDescriptionValidation,
+    contentValidation,
+    blogIdValidation,
     inputValidation,
     (req: Request, res: Response) => {
     const createdPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
@@ -29,6 +39,10 @@ postsRouter.post('/',
 })
 
 postsRouter.put('/:id',
+    titleValidation,
+    shortDescriptionValidation,
+    contentValidation,
+    blogIdValidation,
     inputValidation,
     (req: Request, res: Response) => {
     const updatedPost = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
