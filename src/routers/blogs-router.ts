@@ -25,9 +25,23 @@ blogsRouter.post('/', (req: Request, res: Response) => {
 })
 
 blogsRouter.put('/:id', (req: Request, res: Response) => {
+    const updatedBlog = blogsRepository.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl)
 
+    if(!updatedBlog) {
+        res.sendStatus(HTTP_STATUSES.NOT_FOUND_404)
+        return
+    }
+
+    res.sendStatus(HTTP_STATUSES.NO_CONTENT_204)
 })
 
 blogsRouter.delete('/:id', (req: Request, res: Response) => {
+    const deletedBlog = blogsRepository.deleteBlog(req.params.id)
 
+    if(!deletedBlog) {
+        res.sendStatus(HTTP_STATUSES.NOT_FOUND_404)
+        return
+    }
+
+    res.sendStatus(HTTP_STATUSES.NO_CONTENT_204)
 })
