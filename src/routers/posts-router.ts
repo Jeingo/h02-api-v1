@@ -2,6 +2,7 @@ import {Router, Request, Response} from 'express'
 import {HTTP_STATUSES} from "../constats/status"
 import {postsRepository} from "../repositories/posts-repository"
 import {blogsRepository} from "../repositories/blogs-repository";
+import {inputValidation} from "../middleware/input-validation";
 
 export const postsRouter = Router({})
 
@@ -20,12 +21,16 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     res.json(foundPost)
 })
 
-postsRouter.post('/', (req: Request, res: Response) => {
+postsRouter.post('/',
+    inputValidation,
+    (req: Request, res: Response) => {
     const createdPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
     res.status(HTTP_STATUSES.CREATED_201).json(createdPost)
 })
 
-postsRouter.put('/:id', (req: Request, res: Response) => {
+postsRouter.put('/:id',
+    inputValidation,
+    (req: Request, res: Response) => {
     const updatedPost = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
 
     if(!updatedPost) {
