@@ -1,4 +1,15 @@
 import {body} from "express-validator"
+import {db} from "../repositories/db"
+
+
+const checkId = (id: string) => {
+    const foundBlog = db.blogs.find(b => b.id === id)
+    if(foundBlog) {
+        return true
+    } else {
+        throw new Error('ID not found')
+    }
+}
 
 export const titleValidation = body('title').trim()
     .notEmpty().withMessage(`Shouldn't be empty`).bail()
@@ -18,3 +29,4 @@ export const contentValidation = body('content').trim()
 export const blogIdValidation = body('blogId').trim()
     .notEmpty().withMessage(`Shouldn't be empty`).bail()
     .isString().withMessage('Should be string type').bail()
+    .custom(checkId).withMessage('Should be existing id').bail()
