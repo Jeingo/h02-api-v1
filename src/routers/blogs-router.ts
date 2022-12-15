@@ -2,6 +2,7 @@ import {Router, Request, Response} from 'express'
 import {HTTP_STATUSES} from "../constats/status"
 import {blogsRepository} from "../repositories/blogs-repository";
 import {inputValidation} from "../middleware/input-validation";
+import {descriptionValidation, nameValidation, websiteUrlValidation} from "../middleware/input-blogs-vallidation";
 
 export const blogsRouter = Router({})
 
@@ -21,6 +22,9 @@ blogsRouter.get('/:id', (req: Request, res: Response) => {
 })
 
 blogsRouter.post('/',
+    nameValidation,
+    descriptionValidation,
+    websiteUrlValidation,
     inputValidation,
     (req: Request, res: Response) => {
     const createdBlog = blogsRepository.createBlog(req.body.name, req.body.description, req.body.websiteUrl)
@@ -28,6 +32,9 @@ blogsRouter.post('/',
 })
 
 blogsRouter.put('/:id',
+    nameValidation,
+    descriptionValidation,
+    websiteUrlValidation,
     inputValidation,
     (req: Request, res: Response) => {
     const updatedBlog = blogsRepository.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl)
