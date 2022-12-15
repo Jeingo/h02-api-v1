@@ -1,14 +1,14 @@
 import {Router, Request, Response} from 'express'
 import {HTTP_STATUSES} from "../constats/status"
 import {postsRepository} from "../repositories/posts-repository"
-import {blogsRepository} from "../repositories/blogs-repository";
-import {inputValidation} from "../middleware/input-validation";
+import {inputValidation} from "../middleware/input-validation"
 import {
     blogIdValidation,
     contentValidation,
     shortDescriptionValidation,
     titleValidation
-} from "../middleware/input-posts-validation";
+} from "../middleware/input-posts-validation"
+import {auth} from "../authorization/basic-auth"
 
 export const postsRouter = Router({})
 
@@ -26,6 +26,8 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
     res.json(foundPost)
 })
+
+postsRouter.use(auth)
 
 postsRouter.post('/',
     titleValidation,

@@ -1,8 +1,9 @@
 import {Router, Request, Response} from 'express'
 import {HTTP_STATUSES} from "../constats/status"
-import {blogsRepository} from "../repositories/blogs-repository";
-import {inputValidation} from "../middleware/input-validation";
-import {descriptionValidation, nameValidation, websiteUrlValidation} from "../middleware/input-blogs-vallidation";
+import {blogsRepository} from "../repositories/blogs-repository"
+import {inputValidation} from "../middleware/input-validation"
+import {descriptionValidation, nameValidation, websiteUrlValidation} from "../middleware/input-blogs-vallidation"
+import {auth} from "../authorization/basic-auth"
 
 export const blogsRouter = Router({})
 
@@ -20,6 +21,8 @@ blogsRouter.get('/:id', (req: Request, res: Response) => {
     }
     res.json(foundBlog)
 })
+
+blogsRouter.use(auth)
 
 blogsRouter.post('/',
     nameValidation,
