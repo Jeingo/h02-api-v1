@@ -6,9 +6,10 @@ import {testRouter} from "./routers/test-router"
 
 export const app = express()
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 9999
 
-app.use(bodyParser())
+app.use(express.json())
+
 
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
