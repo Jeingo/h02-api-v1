@@ -13,11 +13,7 @@ app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 app.use('/testing/all-data', testRouter)
 
-if(require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`Server is starting on port: ${PORT}`)
-    })
-}
 
-
-//mongo mongodb+srv://admin:<password>@cluster0.ufsqnle.mongodb.net/?retryWrites=true&w=majority
+app.listen(PORT, () => {
+    console.log(`Server is starting on port: ${PORT}`)
+})
